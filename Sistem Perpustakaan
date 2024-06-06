@@ -1,0 +1,126 @@
+#include<iostream>
+
+using namespace std;
+
+typedef struct node *address;
+struct node {
+    address prev; //node sebelumnya
+    int data; //ID buku
+    address next; //node berikutnya
+};
+
+address first,last=NULL;
+
+address alokasi(int datanya){
+    address hasil = new node;
+    hasil->data=datanya;
+    hasil->next=hasil->prev=NULL;
+    return hasil;
+}
+
+void insertFirst(address baru){
+    if(first == NULL){
+        first=last=baru;
+    }else{
+        baru->next=first;
+        first->prev=baru;
+        first=baru;
+    }
+} 
+
+void insertLast(address baru){
+    if(first==NULL) {
+        first=last=baru;
+    }else{
+        last->next=baru;
+        baru->prev=last;
+        last=baru;
+    }
+}
+
+void deleteFirst(){
+    if(first == NULL){
+        cout<<"Daftar buku kosong."<<endl;
+        return;
+    }
+    first=first->next;
+    delete first->prev;
+    first->prev=NULL;
+}
+
+void deleteLast(){
+    if(first == NULL){
+        cout<<"Daftar buku kosong."<<endl;
+        return;
+    }
+    last=last->prev;
+    delete last->next;
+    last->next=NULL;
+}
+
+void cetak(){
+    address p=first;
+    while (p!=NULL){
+        cout<<"ID Buku: "<<p->data<<endl;
+        p = p->next;
+    }
+}
+//lanjutkan fungsi untuk mengecek ID Buku Prima
+bool isPrime(int n){
+     if(n==NULL){
+        cout<<"\n"<<n;
+    }else{
+        cout<<"Bukan prima";
+        }
+}
+   
+//Fungsi mencetak buku dengan ID Prima
+void printPrimeBookIDs(){
+        address p=first;
+    while (p!=NULL){
+        cout<<"Daftar buku dengan ID Prima: "<<p->data<<endl;
+        p = p->next;
+}
+}
+
+//Fungsi untuk menemukan buku berdasarkan ID
+address cariBuku(int d){
+        if(d == NULL){
+        cout<<"Buku dengan ID %d tidak ditemukan";
+    }else{
+        d=first->data;
+        return;
+    }
+} 
+
+
+//Fungsi untuk menghapus buku berdasarkan ID
+void hapusBuku(int d){
+        if(d == NULL){
+        cout<<"Buku dengan ID %d telah dihapus";
+    }else{
+        d=first->data;
+        return;
+    }
+}
+
+int main(){
+    insertFirst(alokasi(10));
+    insertFirst(alokasi(30));
+    insertFirst(alokasi(50));
+    insertFirst(alokasi(19));
+    insertFirst(alokasi(90));
+    insertFirst(alokasi(27));
+    insertFirst(alokasi(11));
+
+    cout<<"daftar buku awal:"<<endl;
+    cetak();
+
+    hapusBuku(20);
+    hapusBuku(10);
+
+    cout<<"\nDaftar buku setelah penghapusan:"<<endl;
+    cetak();
+    printPrimeBookIDs();
+    return 0;
+}
